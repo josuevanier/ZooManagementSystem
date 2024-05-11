@@ -17,7 +17,7 @@ import static jakarta.mail.internet.InternetAddress.*;
 public class EmailSenderClass {
 
     private static final String EMAIL_FROM = "holyboom4@gmail.com";
-    private static final String EMAIL_TO = "holyboom4@gmail.com";
+    private static String EMAIL_TO = "";
     private static final String APP_PASSWORD = "mrrh uijr ijox zupc";
 
     /**
@@ -49,7 +49,7 @@ public class EmailSenderClass {
     public static void sendEmail(String recipient, String message, String subject) throws MessagingException {
         try {
             String username = "holyboom4@gmail.com";
-            String password = "JOSUe006";
+            EMAIL_TO = recipient;
 
 
             Message message1 = new MimeMessage(getEmailSession());

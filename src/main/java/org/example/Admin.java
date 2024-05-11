@@ -1,5 +1,7 @@
 package org.example;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Admin extends Staff {
@@ -56,6 +58,22 @@ public class Admin extends Staff {
 
         return true;
     }
+    public static Admin readAdminFromFile() {
+        try {
+            File file = new File("admin.txt");
+            Scanner scanner = new Scanner(file);
+            String name = scanner.next();
+            String lastName = scanner.next();
+            String email = scanner.next();
+            String userName = scanner.next();
+            String passWord = scanner.next();
+            return new Admin(name, lastName, email, userName, passWord);
+        } catch (FileNotFoundException e) {
+            System.out.println("Admin file not found.");
+            return null;
+        }
+    }
+
 
     public static void main(String[] args) {
         Admin admin = Admin.getInstance();

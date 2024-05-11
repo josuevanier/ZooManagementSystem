@@ -1,5 +1,11 @@
 package org.example;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Animal {
     private String id;
     private String species;
@@ -26,7 +32,30 @@ public class Animal {
     public String getEnclosureId() {
         return enclosureId;
     }
-    public void readFromFIle(){
 
+
+    /**
+     * Method that read from a given file to put animals into a lIST
+     * @param fileName The file name
+     * @return A list of all the animals  read from that file otherwise exception
+     */
+    public static List<Animal> readFromFile(String fileName) {
+        List<Animal> animals = new ArrayList<>();
+        try {
+            File file = new File(fileName);
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String[] data = scanner.nextLine().split(",");
+                if (data.length >= 2) {
+                    String name = data[0].trim(); // Trim spaces from the first element
+                    String type = data[1].trim(); // Trim spaces from the second element
+                    animals.add(new Animal(name, type));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Animal file not found.");
+        }
+        return animals;
     }
 }
+
