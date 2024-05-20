@@ -1,37 +1,46 @@
 package org.example;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Contains the info of a simple animal object
+ * @author Joseph Josue Forestal
+ */
 public class Animal {
     private String id;
     private String species;
-    private String enclosureId;
+    private static int ID;
 
-    public Animal(String species, String enclosureId) {
+    /**
+     * Constructor for animal
+     * @param species name of the animal(e.g (type) lion)
+     */
+    public Animal(String species) {
         this.species = species;
-        this.enclosureId = enclosureId;
-        this.id = "ANIMAL-" + generateUniqueId();
+        this.id = "ANIMAL-" + ++ID;
     }
 
-    private String generateUniqueId() {
-        return String.valueOf(System.currentTimeMillis());
-    }
 
+    /**
+     * Get the animal ID
+     * @return string id
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Get the current animal species
+     * @return string species name(e.g lion)
+     */
     public String getSpecies() {
         return species;
     }
 
-    public String getEnclosureId() {
-        return enclosureId;
-    }
+
 
 
     /**
@@ -41,21 +50,29 @@ public class Animal {
      */
     public static List<Animal> readFromFile(String fileName) {
         List<Animal> animals = new ArrayList<>();
-        try {
-            File file = new File(fileName);
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String[] data = scanner.nextLine().split(",");
-                if (data.length >= 2) {
-                    String name = data[0].trim(); // Trim spaces from the first element
-                    String type = data[1].trim(); // Trim spaces from the second element
-                    animals.add(new Animal(name, type));
+        try  {
+            BufferedReader animalReader  = new BufferedReader(new FileReader(fileName));
+           String line;
+            while ((line = animalReader.readLine()) != null) {
+                String[] data = line.split(",");
+                for (String species : data) {
+                    String trueSpecies = species.trim();
+                    animals.add(new Animal(trueSpecies));
                 }
             }
-        } catch (FileNotFoundException e) {
+            animalReader.close();
+        } catch (IOException e) {
             System.out.println("Animal file not found.");
         }
         return animals;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Path");
+
+        String pathName =  sc.next();
+        readFromFile(pathName);
     }
 }
 

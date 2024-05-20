@@ -6,10 +6,11 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Days {
-   public EnumSet<DayOfWeek> openDays;
+   public static EnumSet<DayOfWeek> openDays;
    private LocalTime openTime;
    private LocalTime closedTime;
    private Map<LocalDate, LocalTime[]> specialSchedule;
+ private static   Scanner sc = new Scanner(System.in);
 
    public Days( EnumSet<DayOfWeek> openDays,LocalTime openTime, LocalTime closedTime) {
       this.openDays = openDays;
@@ -18,9 +19,14 @@ public class Days {
       this.closedTime = closedTime;
    }
 
-   public void setSpecialSchedule(LocalDate date, LocalTime opening, LocalTime closing) {
-      specialSchedule.put(date, new LocalTime[]{opening, closing});
-   }
+
+    public void setSpecialSchedule(LocalDate date, LocalTime opening, LocalTime closing, boolean closed) {
+        if (closed) {
+            specialSchedule.put(date, null);
+        } else {
+            specialSchedule.put(date, new LocalTime[]{opening, closing});
+        }
+    }
 
    public void setClosed(LocalDate date) {
       specialSchedule.put(date, null);
@@ -40,18 +46,35 @@ public class Days {
    }
 
    public boolean isOpen(LocalDateTime dateTime) {
-      LocalTime[] times = specialSchedule.get(dateTime.toLocalDate());
-      if (times == null && !openDays.contains(dateTime.getDayOfWeek())) {
-         return false;
-      } else if (times != null) {
-         if (times[0] == null && times[1] == null) {
-            return false;
+       LocalTime[] times = specialSchedule.get(dateTime.toLocalDate());
+       java.time.DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
+       System.out.println("Day of the week " +dayOfWeek);
+       ArrayList<DayOfWeek> toCheck = new ArrayList<>();
+       toCheck.addAll(openDays);
+
+       boolean isRegularOpenDay = false;
+       for(DayOfWeek day : toCheck){
+         String current = day + "";
+         String dayOf = dayOfWeek + "";
+         if(current.equals(dayOf)){
+            isRegularOpenDay = true;
+            break;
          }
+       }
 
-         return !dateTime.toLocalTime().isBefore(times[0]) && !dateTime.toLocalTime().isAfter(times[1]);
-      }
+       System.out.println("is regular day "  + isRegularOpenDay);
 
-      return !dateTime.toLocalTime().isBefore(openTime) && !dateTime.toLocalTime().isAfter(closedTime);
+       // Check if the day is a regular open day
+       if (isRegularOpenDay) {
+           // If the day is regular open, check if it falls within regular opening hours
+           return !dateTime.toLocalTime().isBefore(openTime) && !dateTime.toLocalTime().isAfter(closedTime);
+       } else if (times != null) {
+           // Check if the day has special opening hours
+           return !dateTime.toLocalTime().isBefore(times[0]) && !dateTime.toLocalTime().isAfter(times[1]);
+       } else {
+           // If neither regular nor special opening hours are defined, the zoo is closed
+           return false;
+       }
    }
    public static void bookingZooTicket(Days days, LocalTime localTime){
       if(days.getOpenTime().isBefore(localTime) && days.closedTime.isAfter(localTime)){
@@ -62,52 +85,74 @@ public class Days {
 
    @Override
    public String toString() {
-      return "Days{" +
-              "openDays=" + openDays +
-              ", openTime=" + openTime +
-              ", closedTime=" + closedTime +
-              ", specialSchedule=" + specialSchedule +
-              '}';
+       if (openDays.isEmpty() || openTime == null || closedTime == null) {
+           return "Zoo is closed";
+       }
+
+       StringBuilder sb = new StringBuilder();
+       sb.append("Open days: ").append(openDays);
+       sb.append("\nOpening time: ").append(openTime);
+       sb.append("\nClosing time: ").append(closedTime);
+
+       if (specialSchedule != null && !specialSchedule.isEmpty()) {
+           sb.append("\nSpecial Schedule:");
+           for (Map.Entry<LocalDate, LocalTime[]> entry : specialSchedule.entrySet()) {
+               LocalDate date = entry.getKey();
+               LocalTime[] times = entry.getValue();
+               sb.append("\n- Date: ").append(date);
+               if (times != null) {
+                   sb.append(", Opening Time: ").append(times[0]);
+                   sb.append(", Closing Time: ").append(times[1]);
+               } else {
+                   sb.append(", Closed");
+               }
+           }
+       }
+       return sb.toString();
    }
-   public static void bookingZooTicket(Days days, LocalDateTime dateTime) {
-      LocalDate date = dateTime.toLocalDate();
-      LocalTime time = dateTime.toLocalTime();
 
 
-      if (!days.isOpen(dateTime)) {
-         System.out.println("The zoo is closed at the specified date and time.");
-         return;
-      }
+   public EnumSet<DayOfWeek> getOpenDays() {
+      return openDays;
+   }
 
-      if (days.specialSchedule.containsKey(date)) {
-         LocalTime[] specialTimes = days.specialSchedule.get(date);
-         if (specialTimes != null) { // Special schedule exists
+   public Map<LocalDate, LocalTime[]> getSpecialSchedule() {
+      return specialSchedule;
+   }
 
-            if (time.isBefore(specialTimes[0]) || time.isAfter(specialTimes[1])) {
-               System.out.println("The zoo is closed at the specified date and time according to special schedule.");
-               return;
+
+      public static void setOpenedOrClosed(EnumSet<DayOfWeek> openedOrClosed) {
+
+         System.out.println("Enter the day to set (e.g., MONDAY):");
+         String input = sc.next().toUpperCase(); // Convert input to uppercase for case-insensitivity
+         try {
+            DayOfWeek day = DayOfWeek.valueOf(input); // Parse input to DayOfWeek enum
+            System.out.println("Enter the status for " + day + " (OPEN/CLOSED):");
+            String status = sc.next().toUpperCase(); // Convert input to uppercase for case-insensitivity
+            switch (status) {
+               case "OPEN":
+                  openedOrClosed.add(day);
+                  System.out.println(day + " set to OPEN.");
+                  break;
+               case "CLOSED":
+                  openedOrClosed.remove(day);
+                  System.out.println(day + " set to CLOSED.");
+                  break;
+               default:
+                  System.out.println("Invalid status. Please enter OPEN or CLOSED.");
             }
-         } else {
-            System.out.println("The zoo is closed at the specified date according to special schedule.");
-            return;
+         } catch (IllegalArgumentException e) {
+            System.out.println("Invalid day. Please enter a valid day of the week (e.g., MONDAY).");
          }
-      }
-      System.out.println("The ticket is booked for " + date + " at " + time);
    }
 
-   public static void main(String[] args) {
-      LocalTime localTime =  LocalTime.of(22,30,0);
-      LocalTime localTime1 = LocalTime.of(15,20,5);
-
-      EnumSet<DayOfWeek> dayOfWeeks;
-      dayOfWeeks = EnumSet.noneOf(DayOfWeek.class);
-      dayOfWeeks.add(DayOfWeek.Monday);
-
-      Days days = new Days(dayOfWeeks,LocalTime.now(),localTime);
-      System.out.println(days);
-
-
-      Days.bookingZooTicket(days,localTime1);
+   public void setOpenTime(LocalTime openTime) {
+      this.openTime = openTime;
    }
+
+   public void setClosedTime(LocalTime closedTime) {
+      this.closedTime = closedTime;
+   }
+
 }
 
