@@ -16,7 +16,7 @@ import static jakarta.mail.internet.InternetAddress.*;
  * @author Joseph Josue Forestal
  */
 public class EmailSenderClass {
-
+//
     private static final String EMAIL_FROM = "holyboom4@gmail.com";
     private static String EMAIL_TO = "";
     private static final String APP_PASSWORD = "mrrh uijr ijox zupc";
