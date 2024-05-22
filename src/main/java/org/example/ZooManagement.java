@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
  * @author Joseph Josue Forestal
  */
 public class ZooManagement {
-    private static String DEFAULT_NAME_OF_ZOO = "ZOO";
     private static boolean[] isAdmIn = {false};
     private static boolean[] isStaff = {false};
     public static LocalTime DEFAULT_OPENING_TIME = LocalTime.of(10, 0); // 10:00 AM
@@ -44,9 +43,10 @@ public class ZooManagement {
 
 
     static Scanner sc = new Scanner(System.in);
-    static String zooName = DEFAULT_NAME_OF_ZOO;
+    static String zooName;
 
-    {
+  static  {
+      // static initializers
         System.out.println("Enter The name of the Zoo !");
         zooName = sc.next();
     }
