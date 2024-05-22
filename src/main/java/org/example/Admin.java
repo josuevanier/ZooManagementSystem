@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
  * @author Joseph Josue Forestal
  */
 public class Admin extends Staff implements Maintainable {
+    //
     private static Scanner sc = new Scanner(System.in);
     private static Admin instance;
     private String email;
