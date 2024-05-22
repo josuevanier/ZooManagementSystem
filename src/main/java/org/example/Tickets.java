@@ -17,6 +17,7 @@ import java.util.Scanner;
  * @author Joseph Josue Forestal
  */
 public class Tickets {
+    //
     private static double childPrice;
     private static double adultPrice;
     private static double seniorPrice;
