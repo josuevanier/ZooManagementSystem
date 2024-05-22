@@ -6,6 +6,7 @@ package org.example;
  * @author  Joseph Josue Forestal
  */
 public class Person {
+    // Person class
     private int age;
     private String firstName;
     private String lastName;
