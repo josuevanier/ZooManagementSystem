@@ -6,6 +6,7 @@ package org.example;
  * @author Joseph Josue Forestal
  */
 public abstract class  Staff {
+    //
     double hours;
     String firstName;
     String lastName;
