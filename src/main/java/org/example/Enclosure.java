@@ -7,6 +7,7 @@ import java.util.*;
  * @author Joseph Josue Forestal
  */
 public class Enclosure {
+    //
     private String id;
     private String name;
     static  int i = 0;
