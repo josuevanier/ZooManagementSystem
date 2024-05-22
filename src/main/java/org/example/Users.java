@@ -10,6 +10,7 @@ import java.util.Scanner;
  * @author Joseph Josue Forestal
  */
 public class Users {
+    //
     private Days zooDays;
     private String firstName;
     private String lastName;
