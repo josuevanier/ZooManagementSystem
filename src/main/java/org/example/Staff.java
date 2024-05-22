@@ -15,7 +15,6 @@ public abstract class  Staff {
      * Default constructor
      */
     public Staff(){
-
     }
 
     /**
@@ -36,7 +35,7 @@ public abstract class  Staff {
         this.firstName = firstName;
         this.lastName = lastName;
         this.hours = hours;
-        this.id = String.format("STAFF-"+nextId++);
+        this.id = String.format("STAFF-"+ nextId++);
     }
 
     /**

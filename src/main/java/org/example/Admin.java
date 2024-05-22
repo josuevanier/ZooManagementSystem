@@ -30,7 +30,7 @@ public class Admin extends Staff implements Maintainable {
      * @param name the first name of the admin
      * @param lastName the last name of the admin
      * @param email the email of the admin
-     * @param userName the user name of the admin
+     * @param userName the userName of the admin
      * @param passWord the password of the admin
      */
     private Admin(String name, String lastName, String email, String userName, String passWord) {
@@ -237,7 +237,7 @@ public class Admin extends Staff implements Maintainable {
     /**
      * View the user transaction
      * @param users A set of users
-     * @param userName  the userName that we looking for
+     * @param userName  the userName that we searched.
      */
     public void viewUserTransactionHistory(Set<Users> users, String userName) {
         System.out.println("User Transaction History:");

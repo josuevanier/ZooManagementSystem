@@ -167,8 +167,11 @@ public class Tickets {
         }
     }
 
-    public static void main(String[] args) {
-
+    /**
+     * Set status of the current ticket
+     * @param status booked or unbooked
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
-
 }

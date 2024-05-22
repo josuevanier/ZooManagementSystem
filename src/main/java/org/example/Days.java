@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * Contains the info of Days in the zoo mangamenet system
+ */
 public class Days {
    public static EnumSet<DayOfWeek> openDays;
    private LocalTime openTime;
@@ -12,6 +15,12 @@ public class Days {
    private Map<LocalDate, LocalTime[]> specialSchedule;
  private static   Scanner sc = new Scanner(System.in);
 
+    /**
+     * Constructor for days
+     * @param openDays
+     * @param openTime
+     * @param closedTime
+     */
    public Days( EnumSet<DayOfWeek> openDays,LocalTime openTime, LocalTime closedTime) {
       this.openDays = openDays;
       this.specialSchedule = new HashMap<>();
@@ -19,7 +28,13 @@ public class Days {
       this.closedTime = closedTime;
    }
 
-
+    /**
+     * Set special scheduel
+     * @param date Local date
+     * @param opening Opening time
+     * @param closing closing time
+     * @param closed and boolean status if its open are closes
+     */
     public void setSpecialSchedule(LocalDate date, LocalTime opening, LocalTime closing, boolean closed) {
         if (closed) {
             specialSchedule.put(date, null);
@@ -28,22 +43,20 @@ public class Days {
         }
     }
 
-   public void setClosed(LocalDate date) {
-      specialSchedule.put(date, null);
-   }
 
-   public static String seeOpenHours(Days days){
-      String format = String.format("The Zoo is Open " + days.getOpenTime() + " and closes at " + days.getClosedTime());
-      return format;
-   }
-
-   public LocalTime getOpenTime() {
+    /**
+     *Get the oepn time
+      * @return Local time object
+     */
+    public LocalTime getOpenTime() {
       return openTime;
    }
 
-   public LocalTime getClosedTime() {
-      return closedTime;
-   }
+    /**
+     * Chceck if the zoo is open during the current days
+     * @param dateTime date time object
+     * @return boolean value if its open true else false
+     */
 
    public boolean isOpen(LocalDateTime dateTime) {
        LocalTime[] times = specialSchedule.get(dateTime.toLocalDate());
@@ -76,13 +89,11 @@ public class Days {
            return false;
        }
    }
-   public static void bookingZooTicket(Days days, LocalTime localTime){
-      if(days.getOpenTime().isBefore(localTime) && days.closedTime.isAfter(localTime)){
-         System.out.println("Nice");
-      }else System.out.println("no");
 
-   }
-
+    /**
+     * To String method to print the days values
+     * @return
+     */
    @Override
    public String toString() {
        if (openDays.isEmpty() || openTime == null || closedTime == null) {
@@ -112,15 +123,18 @@ public class Days {
    }
 
 
-   public EnumSet<DayOfWeek> getOpenDays() {
-      return openDays;
-   }
-
+    /**
+     * Get special scheduels
+     * @return A map special scheduel with local date and time [] as an array because it invololves opening time and closed time
+     */
    public Map<LocalDate, LocalTime[]> getSpecialSchedule() {
       return specialSchedule;
    }
 
-
+    /**
+     * Set opene or closed base of the current enum of the weak
+     * @param openedOrClosed
+     */
       public static void setOpenedOrClosed(EnumSet<DayOfWeek> openedOrClosed) {
 
          System.out.println("Enter the day to set (e.g., MONDAY):");
@@ -146,13 +160,20 @@ public class Days {
          }
    }
 
+    /**
+     * Set open time
+     * @param openTime take a local time object
+     */
    public void setOpenTime(LocalTime openTime) {
       this.openTime = openTime;
    }
 
+    /**
+     * Set closed time
+     * @param closedTime take a local time object
+     */
    public void setClosedTime(LocalTime closedTime) {
       this.closedTime = closedTime;
    }
-
 }
 

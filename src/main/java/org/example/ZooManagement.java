@@ -1,6 +1,6 @@
 package org.example;
 
-import java.io.File;
+
 import java.sql.SQLOutput;
 import java.time.*;
 import java.time.format.DateTimeParseException;
@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Contains the info of a Zoo management
+ * Contains the info of a Zoo management  system
  * @author Joseph Josue fORESTAL
  */
 public class ZooManagement {
@@ -129,18 +129,13 @@ public class ZooManagement {
                     break;
                 } else {
                     attempts++;
-                    System.out.println("Invalid Staff ID. Attempts left: " + (MAX_ATTEMPTS - attempts));
                 }
             }
         }
 
         if (isStaff[0]) {
-
-            while (isStaff[0]) {
                 StaffMenu(employees, id);
-            }
             isStaff[0] = false;
-
         } else {
             System.out.println("Maximum login attempts reached. Exiting...");
         }
@@ -162,8 +157,6 @@ public class ZooManagement {
             System.out.println("6.Update closed time hours");
             System.out.println("7.Sort enclosures");
             System.out.println("8.Sort animal within enclosure");
-
-            System.out.println("Enter your choice: ");
             int choice;
             while (true) {
                 System.out.print("Enter an integer: ");
@@ -180,7 +173,7 @@ public class ZooManagement {
                     for (Staff employee : employees) {
                         if (employee.staffGetId().equals(id)) {
                             ((NormalEmployee) employee).performMaintenanceTasks();
-                            ((NormalEmployee) employee).Transaction("Task seen");
+                            ((NormalEmployee) employee).Transaction("Tasks seen");
                         }
                     }
                     break;
@@ -237,11 +230,11 @@ public class ZooManagement {
     }
 
     /**
-     * Sort the enclosures with comaparator
+     * Sort the enclosures with comparator
      */
     public static void sortEnclosures() {
         Collections.sort(enclosures, Comparator.comparing(Enclosure::getName));
-        System.out.println(enclosures);
+        System.out.println(enclosures.toString());
         System.out.println("Enclosures sorted successfully.");
     }
 
@@ -280,10 +273,12 @@ public class ZooManagement {
         System.out.println("14. Sort staff");
         System.out.println("15. Set pricing");
         System.out.println("16.Remove  enclosure");
-        System.out.println("17. Quit");
+        System.out.println("17.Find employee");
+        System.out.println("18.See employee history");
+        System.out.println("19 . Quit");
         int choice;
         while (true) {
-            System.out.print("Enter an integer: ");
+            System.out.println("Enter an integer: ");
             if (sc.hasNextInt()) {
                 choice = sc.nextInt();
                 sc.nextLine();  // Consume the newline left-over
@@ -403,11 +398,37 @@ public class ZooManagement {
                         break;
                     }
                 }
+                break;
             case 17:
+                System.out.println("Enter The employee id ");
+                String id = sc.next();
+                if(id.matches("STAFF-[0-9]+")){
+                    System.out.println(findEmployee(employees,id, employees.size() - 1));
+                break;
+                }
+                else {System.out.println("Invalid format for id ");
+                    break;
+                }
+            case 19:
+                System.out.println("Staff Id:");
+                String Id = sc.next();
+                if(Id.matches("STAFF-[0-9]+")){
+                    for(Staff employee : employees){
+                        if(((NormalEmployee) employee).getId().equals(Id)){
+                            ((NormalEmployee) employee).getTransactionHistory();
+                            break;
+                        }
+                    }
+                    break;
+                }else {
+                    break;
+                }
+            case 18:
                 System.out.println("Bye " + admin.getUserName());
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
+                break;
         }
     }
 
@@ -512,9 +533,10 @@ public class ZooManagement {
             System.out.println("3. Back to Main Menu");
             System.out.println("4. Book ticket ");
             System.out.println("5. Cancel ticket transaction ");
-            System.out.println("5. See transactions");
-            System.out.println("5. See prices ");
-            System.out.println("6. Exit only when you are done ! ");
+            System.out.println("6. See transactions");
+            System.out.println("7. See prices ");
+            System.out.println("8. Sort enclosures ");
+            System.out.println("9. Exit only when you are done ! ");
             System.out.print("Enter your choice: ");
             int choice;
             while (true) {
@@ -552,36 +574,38 @@ public class ZooManagement {
                     System.out.println("Ticket ID provided from email: ");
                     String msg = sc.next();
                     if(msg.matches("Zoo-[0-9]+")) users1.cancelTicket(msg);
-                    else System.out.println("Wrong id");
+                    else System.out.println("Wrong id Format");
                     break;
-                case 23:
+                case 6:
                     System.out.println("See transactions: ");
                     if(users1.getTransactions() != null){
-                        users1.getTransactions();
+                      users1.displayTransactionHistory();
                         break;
                     }
                     else{System.out.println("No transactions have been made.");
                     break;
                     }
-
                 case 7:
                     System.out.println("Child price  "  + Tickets.getChildPrice() + "$");
                     System.out.println("Adults price " + Tickets.getAdultPrice() + "$");
                     System.out.println("Elders/Seniors price " + Tickets.getSeniorPrice() + "$");
                     break;
-                case 10:
+                case 8:
+                    sortEnclosures();
+                    break;
+                case 9:
                     isExit = true;
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
+                    break;
             }
         }
-
     }
 
     /**
      * Check if admin logged in and if it has valid inputs
-     * @param admin Admin object as info refference to check if the inputs are valid
+     * @param admin Admin object as info reference to check if the inputs are valid
      * @return a boolean value true or false based of the log in inputs
      */
     private static boolean adminLogin(Admin admin) {
@@ -599,7 +623,6 @@ public class ZooManagement {
                 attempts++;
             }
         }
-
         return false; // Failed login after max attempts
     }
 
@@ -645,7 +668,7 @@ public class ZooManagement {
     }
 
     /**
-     * The possible sorting  of users  for the admin based: names and age
+     * The possible sorting  of users  for the admin based: firstName, lastName and age
       */
     private static void sortUsersMenu() {
         System.out.println("Sort Users By:");
@@ -677,6 +700,7 @@ public class ZooManagement {
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
+                break;
         }
     }
 
@@ -691,7 +715,6 @@ public class ZooManagement {
         System.out.print("Enter your choice: ");
         int choice = sc.nextInt();
         sc.nextLine(); // Consume newline
-
         switch (choice) {
             case 1:
                 TreeSet<NormalEmployee> sortedEmployeesByFirstName = new TreeSet<>(Comparator.comparing(NormalEmployee::getFirstName));
@@ -703,24 +726,95 @@ public class ZooManagement {
                 }
                 break;
             case 2:
-                TreeSet<NormalEmployee> sortedEmployeesByLastName = new TreeSet<>(Comparator.comparing(NormalEmployee::getLastName));
-                sortedEmployeesByLastName.addAll((Collection<? extends NormalEmployee>) employees);
+                List<Staff> employeees = new ArrayList<>(employees);
+                selectionSortByHoursWorked(employeees);
                 System.out.println("Staff sorted successfully.");
-                for (NormalEmployee employee : sortedEmployeesByLastName) {
-                    System.out.println(employee.getLastName() + " " + employee.getFirstName());
+                for (Staff employee : employeees) {
+                    System.out.println(((NormalEmployee)employee).getFirstName() + " " + (((NormalEmployee)employee).getLastName() + " " + ((NormalEmployee) employee).getHours()));
                 }
                 break;
             case 3:
-                TreeSet<NormalEmployee> sortedEmployeesByHoursWorked = new TreeSet<>(Comparator.comparingDouble(NormalEmployee::getHours));
-                sortedEmployeesByHoursWorked.addAll((Collection<? extends NormalEmployee>) employees);
-
-                System.out.println("Staff sorted successfully.");
-                for (NormalEmployee employee : sortedEmployeesByHoursWorked) {
-                    System.out.println(employee.getFirstName() + " " + employee.getLastName() + " " + employee.getHours());
+                List<Staff> staffs = new ArrayList<>(employees);
+                bubbleSortByHoursWorked(staffs);
+                for (Staff staff : staffs) {
+                    System.out.println(((NormalEmployee)staff).getFirstName() + " " +((NormalEmployee) staff).getLastName() + " " + ((NormalEmployee)staff).getHours());
                 }
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
+                break;
+        }
+    }
+
+    /**
+     * Selection sort algorithm(O(n^2))
+     * @param list take a list of staffs
+     */
+    public static void selectionSortByHoursWorked(List<Staff> list) {
+        int n = list.size();
+
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                // Compare last names of list[j] with the current minimum
+                if (((NormalEmployee) list.get(j)).getLastName().compareTo(((NormalEmployee) list.get(minIndex)).getLastName()) < 0) {
+                    minIndex = j;
+                }
+            }
+
+            // Swap list[i] with the smallest element found in the unsorted portion
+            Staff temp = list.get(i);
+            list.set(i, list.get(minIndex));
+            list.set(minIndex, temp);
+        }
+    }
+    /**
+     * Bubble sort algorithm that sort the employees
+     * @param list take a list employees (as an array)
+     */
+    public static void bubbleSortByHoursWorked(List<Staff> list) {
+        //O(n) but worst case it can also be O(n^2) if have more employees
+        int n = list.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (((NormalEmployee)list.get(j)).getHours() > ((NormalEmployee)list.get(j + 1)).getHours()){
+                    // Swap list[j] and list[j + 1]
+                    Staff temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+    }
+
+    /**
+     * Method that uses recursion to find an employee based on their id .
+     * @param employees the collection where the employees can be found
+     * @param id the employee's id
+     * @param index the employee containers size - 1  to keep track as an index
+     * @return a string if the employee is found (a message if the employee is found )
+     */
+    public static String findEmployee(TreeSet<? extends  Staff> employees, String id, int index){
+        //O(n)
+        if (employees == null) {
+            return "The employee collection is null.";
+        }
+
+        if (index < 0) {
+            return "Staff " + id + " has not been found.";
+        }
+
+        Staff[] array = new Staff[employees.size()];
+        employees.toArray(array);
+
+        if (array[index] == null) {
+            return "Staff " + id + " has not been found.";
+        }
+
+        if (((NormalEmployee) array[index]).getId().equals(id)) {
+            return "Staff is found: " + ((NormalEmployee) array[index]).getFirstName();
+        } else {
+            return findEmployee(employees, id, index - 1);
         }
     }
 }

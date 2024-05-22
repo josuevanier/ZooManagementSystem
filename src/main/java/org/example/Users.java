@@ -96,14 +96,20 @@ public class Users {
         return gmail;
     }
 
+    /**
+     * Get the current users transactions
+     * @return A list of transactions
+     */
     public List<Tickets> getTransactions() {
         return transactions;
     }
 
+    /**
+     * Method to book a ticket for the user based on the reservations times of the user
+     */
     public void bookTickets() {
         LocalDateTime reservationTime = null;
         boolean validTime = false;
-
         // Loop until a valid reservation time is entered
         while (!validTime) {
             System.out.println("Enter reservation date and time (YYYY-MM-DDT(T constant)HH:MM):");
@@ -175,29 +181,32 @@ public class Users {
         }
         // Call the existing bookTicket method from Tickets class
         Tickets tickets = Tickets.bookTicket(zooDays, reservationTime, gmail, persons);
-        if (tickets != null) transactions.add(tickets);
+        if (tickets != null) this.transactions.add(tickets);
     }
 
-
+    /**
+     * Cancel a transaction in the ucrrent user's List of transactions(history)
+     * @param ticketId take a string id for the ticket booked.
+     */
         public void cancelTicket (String ticketId){
             for (Tickets ticket : transactions) {
                 if (ticket.getId().equals(ticketId)) {
-                    transactions.remove(ticket);
+                    ticket.setStatus("UnBooked");
                     System.out.println("Ticket cancelled successfully. ID: " + ticketId);
                     return;
                 }
             }
             System.out.println("Ticket not found with ID: " + ticketId);
         }
-        public void displayTransactionHistory () {
+
+    /**
+     * This method display transaction history of the user if he booKed multiple ticket
+     */
+    public void displayTransactionHistory () {
             System.out.println("Transaction History for User: " + gmail);
             for (Tickets ticket : transactions) {
                 System.out.println("Ticket ID: " + ticket.getId() + ", Price: $" + ticket.getPrice() + ", Status: " + ticket.getStatus());
             }
-        }
-
-        public static void main (String[]args){
-
         }
 
     }

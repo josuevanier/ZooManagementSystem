@@ -66,13 +66,5 @@ public class Animal {
         }
         return animals;
     }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Path");
-
-        String pathName =  sc.next();
-        readFromFile(pathName);
-    }
 }
 

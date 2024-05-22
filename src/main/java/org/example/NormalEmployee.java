@@ -8,13 +8,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * Class that Contains the info of a normal employee
+ * extended staff
+ */
 public class NormalEmployee extends Staff implements Maintainable {
 
     private String id;
     private String gmail;
     private static Scanner sc = new Scanner(System.in);
-    private List<String> transactionHistory;
+    public List<String> transactionHistory;
 
+    /**
+     * Constructor of a normal employee
+     * @param firstName
+     * @param lastName
+     * @param hours
+     * @param gmail
+     */
     public NormalEmployee(String firstName, String lastName, double hours, String gmail) {
         super(firstName, lastName, hours);
         this.gmail = gmail;
@@ -22,39 +33,52 @@ public class NormalEmployee extends Staff implements Maintainable {
         this.transactionHistory = new ArrayList<>();
     }
 
+    /**
+     * Get the current employee hours
+     * @return double hours worked of that employee
+     */
     public double getHours() {
         return hours;
     }
 
+    /**
+     * Get the firstName of the current employee
+     * @return the employee's first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Get the current employee's last name
+     * @return ast name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Get the current employee id
+     * @return String Id
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Set hours (Not use)
+     * @param hours double hours being set
+     */
     public void setHours(double hours) {
         this.hours = hours;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-
+    /**
+     * READsTAFFfROM FILE
+     * @param filename The string file name as a path
+     * @return Tree set of emplyee to avoid duplicates
+     */
     public static TreeSet<NormalEmployee> readStaffFromFile(String filename) {
         TreeSet<NormalEmployee> staffList = new TreeSet<>(Comparator.comparing(NormalEmployee::getFirstName));
         try {
@@ -106,41 +130,61 @@ public class NormalEmployee extends Staff implements Maintainable {
         return staffList;
 }
 
+    /**
+     * Update pseudo update (since he can't actually update ) the openeing hours
+     * @param zooDays the current zooo days
+     */
     @Override
     public void updateOpeningHours(Days zooDays) {
         System.out.println("Normal employees do not have permission to update opening hours.");
     }
 
 
-
-
-
+    /**
+     * Set/ Update the current prices
+     * @param tickets Tickets object
+     */
     @Override
     public void updateTicketPrices(Tickets tickets) {
         Tickets.setPricing(sc);
     }
 
 
-
+    /**
+     * For the normal employee he can see the tasks
+     */
     @Override
     public void performMaintenanceTasks() {
         System.out.println(ZooManagement.tasks);
     }
 
+    /**
+     * Pseudo Update closed time since the employee can't
+     * @param days
+     */
     @Override
     public void UpdateClosedTimeHours(Days days) {
         System.out.println("Normal employee cannot update closed time hours");
     }
+
+    /**
+     * The employees can add Transactions their history
+     * @param transaction transaction string being add to its transaction history
+     */
     public  void Transaction(String transaction){
         this.transactionHistory.add(transaction);
     }
 
-
-    public static void main(String[] args) {
-       TreeSet<NormalEmployee> employees =  readStaffFromFile("/Users/josue/EmployeeReadFile");
-
-        for(NormalEmployee employee : employees){
-            System.out.println("Employee " + employee.getFirstName() + " " + employee.getHours() + " " + employee.gmail);
+    /**
+     * Get the current employee history
+     */
+    public void getTransactionHistory() {
+        System.out.print("History : ");
+        for(String transac : transactionHistory){
+            if(!transac.isEmpty() && !transac.isBlank()){
+                System.out.print( transac + " ");
+            }
         }
     }
+
 }
