@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.Map;
 
 /**
- * Interface that contains the method of Maintainable that staffs and admin implimented
+ * Interface that contains the method of Maintainable that staffs and admin impliment
  */
 public interface Maintainable {
     // Method to update opening hours

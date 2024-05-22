@@ -26,7 +26,7 @@ public abstract class  Staff {
     }
 
     /**
-     * Contructor for staff with more info (use for Normal employees)
+     * Constructor for staff with more info (use for Normal employees)
      * @param firstName this staff's first name
      * @param lastName this staff's last name
      * @param hours this staff's hours worked

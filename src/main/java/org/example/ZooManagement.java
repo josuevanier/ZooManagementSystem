@@ -9,6 +9,11 @@ import java.util.stream.Collectors;
 
 /**
  * Contains the info of a Zoo management  system
+ * This zoo management system simulate the interaction between tree interface :
+ * The user level 1
+ * The staff level 2
+ * the Admin level 3
+ * Thse interactions can be observed by the interdependeance of each level which means that each class needs another to fully functionate
  * @author Joseph Josue Forestal
  */
 public class ZooManagement {
