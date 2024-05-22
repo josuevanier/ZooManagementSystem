@@ -8,6 +8,7 @@ import java.util.Map;
  * Interface that contains the method of Maintainable that staffs and admin impliment
  */
 public interface Maintainable {
+    //
     // Method to update opening hours
     void updateOpeningHours(Days days);
 
