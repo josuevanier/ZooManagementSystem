@@ -15,7 +15,7 @@ import java.util.*;
  * @author Joseph Josue Forestal
  */
 public class NormalEmployee extends Staff implements Maintainable {
-
+//
     private String id;
     private String gmail;
     private static Scanner sc = new Scanner(System.in);
