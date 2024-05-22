@@ -9,7 +9,7 @@ import java.util.*;
  * Contains the info of Days in the zoo management system
  * Useful to keep track of time (In a simple level)
  */
-public class Days {
+public class Days {//
    public static EnumSet<DayOfWeek> openDays;
    private LocalTime openTime;
    private LocalTime closedTime;
