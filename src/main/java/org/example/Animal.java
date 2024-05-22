@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 /**
  * Contains the info of a simple animal object
+ * This class is really simple just to keep track of animals
  * @author Joseph Josue Forestal
  */
 public class Animal {

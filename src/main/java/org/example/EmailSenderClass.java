@@ -11,7 +11,8 @@ import jakarta.mail.internet.MimeMultipart;
 import static jakarta.mail.internet.InternetAddress.*;
 
 /**
- * Contains the info and methods to send an email
+ * Contains the info and methods that sends an email to the user when they book a tickets
+ * This class follow the principle static utility class of no instances since no instance can be made
  * @author Joseph Josue Forestal
  */
 public class EmailSenderClass {

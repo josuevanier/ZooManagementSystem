@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 /**
  * Contains the info of a user
+ * @author Joseph Josue Forestal
  */
 public class Users {
     private Days zooDays;

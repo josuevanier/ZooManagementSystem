@@ -10,7 +10,9 @@ import java.util.*;
 
 /**
  * Class that Contains the info of a normal employee
+ * Normal employees is just an admin with less methods
  * extended staff
+ * @author Joseph Josue Forestal
  */
 public class NormalEmployee extends Staff implements Maintainable {
 

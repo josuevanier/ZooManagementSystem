@@ -2,6 +2,7 @@ package org.example;
 
 /**
  * Contains the info of a simple person
+ * When we want to book ticket for different person that is not the current user
  * @author  Joseph Josue Forestal
  */
 public class Person {

@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 /**
  * Contains the info of a ticket
+ * Tickets contains everything that the user can pay
  * @author Joseph Josue Forestal
  */
 public class Tickets {
@@ -36,19 +37,35 @@ public class Tickets {
         this.status = "Booked";
     }
 
+    /**
+     * This method generate unique id for the ticket id
+     */
     private void generateUniqueId() {
         this.id = String.format("Zoo-%d", nextId++);
     }
 
+    /**
+     * This method get the price
+     * @return double price
+     */
     public double getPrice() {
         return price;
     }
+
+    /**
+     * Thi method is to set the price for each data field child, adults and seniors/elders
+     * @param scanner
+     */
     public static void setPricing(Scanner scanner) {
         childPrice = promptForDouble(scanner, "Enter price for child: ");
         adultPrice = promptForDouble(scanner, "Enter price for adults");
         seniorPrice = promptForDouble(scanner, "Enter price for seniors: ");
     }
 
+    /**
+     * Get children's price
+     * @return double
+     */
     public static double getChildPrice() {
         return childPrice;
     }
@@ -57,10 +74,20 @@ public class Tickets {
         return adultPrice;
     }
 
+    /**
+     * Get elders' price
+     * @return double price
+     */
     public static double getSeniorPrice() {
         return seniorPrice;
     }
 
+    /**
+     * Promt to get the values for prices
+     * @param scanner the scanner system input
+     * @param prompt is a String message
+     * @return double value/prices in one
+     */
     private static double promptForDouble(Scanner scanner, String prompt) {
         double value = 0;
         boolean valid = false;
@@ -81,10 +108,20 @@ public class Tickets {
         }
         return value;
     }
-    public void setPrice(int value){
+
+    /**
+     * Set price (not use)
+     * @param value doublethe value
+     */
+    public void setPrice(double value){
         this.price = value;
     }
 
+    /**
+     * This method calculate the toal price for each persons
+     * @param persons a list persons to check the total price
+     * @return double price
+     */
     private static double calculateTotalPrice(List<Person> persons) {
         double totalPrice = 0.0;
         for (Person person : persons) {
@@ -99,22 +136,30 @@ public class Tickets {
         return totalPrice;
     }
 
+    /**
+     * This method return ticket id
+     * @return
+     */
     public String getId() {
         return id;
     }
 
-    public LocalDateTime getReservationTime() {
-        return reservationTime;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
+    /**
+     *This method get the current ticket status
+     * @return  String status of thecurrent ticker
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Thi method book a ticket
+     * @param days the current days (Days object)
+     * @param reservationTime the reservation time
+     * @param userEmail the email of the user
+     * @param persons and a list persons
+     * @return
+     */
     public static Tickets bookTicket(Days days, LocalDateTime reservationTime, String userEmail, List<Person> persons) {
         LocalTime reservationLocalTime = reservationTime.toLocalTime(); // Extract the time component
         // Check if the zoo is open at the specified time
@@ -142,6 +187,13 @@ public class Tickets {
         return ticket;
     }
 
+    /**
+     * This method sends email confirmation to the user
+     * @param userEmail the user's email
+     * @param reservationTime the local reservation time
+     * @param totalPrice the total price
+     * @param ticketId the ticket id
+     */
     private static void sendConfirmationEmail(String userEmail, LocalDateTime reservationTime, double totalPrice, String ticketId) {
         // Format the reservation time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMM d, uuuu 'at' h:mm a");

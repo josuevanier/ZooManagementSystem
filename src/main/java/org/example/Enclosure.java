@@ -2,7 +2,8 @@ package org.example;
 import java.util.*;
 
 /**
- * Contains the info of an Enclosure
+ * Contains the info of an Enclosure that contains animals
+ * Thus this class allow us to regroup animals together into one section
  * @author Joseph Josue Forestal
  */
 public class Enclosure {

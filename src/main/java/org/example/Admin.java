@@ -15,7 +15,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Contains the info of an Admin(singleton pattern)
+ * Contains the info of an Admin
+ * this class extended staff and impliment maintainable
+ * This class follow the singleton pattern which means only one instance can be made
  * @author Joseph Josue Forestal
  */
 public class Admin extends Staff implements Maintainable {
@@ -61,7 +63,7 @@ public class Admin extends Staff implements Maintainable {
     }
 
     /**
-     * Get the admin email
+     * Get the admin's email
      * @return the email (not use)
      */
 
@@ -87,7 +89,7 @@ public class Admin extends Staff implements Maintainable {
 
     /**
      * Read the admin from a file
-     * @param fileAsPath the file path
+     * @param fileAsPath the file name as path
      * @return an admin object
      */
     public static Admin readAdminFromFile(String fileAsPath) {
