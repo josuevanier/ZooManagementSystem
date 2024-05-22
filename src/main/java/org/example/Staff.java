@@ -1,6 +1,7 @@
 package org.example;
 
 /**
+ * Staff is an abstract class
  * Contains info for staff ( sets of methods and field (blue-prints ))
  * @author Joseph Josue Forestal
  */
