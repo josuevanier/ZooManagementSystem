@@ -81,7 +81,7 @@ public class Enclosure {
      * This method display animals in the enclosre
      * @param enclosures list of enclosures
      */
-    public  void displayAnimals(List<Enclosure> enclosures) {
+    public  static void displayAnimals(List<Enclosure> enclosures) {
         Scanner  scanner = new Scanner(System.in);
         System.out.println("1. Display animals based on species ");
         System.out.println("2. Display all animals (default)");
