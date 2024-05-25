@@ -1,9 +1,8 @@
 package org.example;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Contains the info of a simple animal object
@@ -50,23 +49,48 @@ public class Animal {
      * @param fileName The file name
      * @return A list of all the animals  read from that file otherwise exception
      */
-    public static List<Animal> readFromFile(String fileName) {
-        List<Animal> animals = new ArrayList<>();
-        try  {
-            BufferedReader animalReader  = new BufferedReader(new FileReader(fileName));
-           String line;
+    public static void readFromFile(String fileName, List<Enclosure> enclosures) {
+        try(BufferedReader animalReader = new BufferedReader(new FileReader(fileName))) {
+            String line;
             while ((line = animalReader.readLine()) != null) {
                 String[] data = line.split(",");
                 for (String species : data) {
                     String trueSpecies = species.trim();
-                    animals.add(new Animal(trueSpecies));
+                    Enclosure existingEnclosure = null;
+
+                    // Check if the enclosure already exists
+                    for (Enclosure enclosure : enclosures) {
+                        if (trueSpecies.equalsIgnoreCase(enclosure.getName())) {
+                            existingEnclosure = enclosure;
+                            break;
+                        }
+                    }
+
+                    if (existingEnclosure != null) {
+                        // Add the animal to the existing enclosure
+                        Animal animal = new Animal(trueSpecies);
+                        existingEnclosure.addAnimal(animal);
+                        System.out.println("Animal  of " + species + " (" + animal.getId() + ") added " + "to " + existingEnclosure.getId() );
+                    } else {
+                        // Create a new enclosure and add the animal
+                        Enclosure newEnclosure = new Enclosure(trueSpecies);
+                        Animal animal = new Animal(trueSpecies);
+                        newEnclosure.addAnimal(animal);
+                        enclosures.add(newEnclosure);
+                        System.out.println("A new enclosure has been created for " + trueSpecies + "\n" +
+                                "Animal added: " + animal.getId() + " of " + newEnclosure.getName() + " species");
+                    }
                 }
             }
-            animalReader.close();
-        } catch (IOException e) {
+        } catch(IOException E){
             System.out.println("Animal file not found.");
         }
-        return animals;
+    }
+
+    public static void main(String[] args) {
+        List<Enclosure> enclosures = new ArrayList<>();
+        readFromFile("src/main/java/org/example/AnimalFromFile.rtf",enclosures);
+        System.out.println(Arrays.toString(enclosures.toArray()));
     }
 }
 
