@@ -126,8 +126,9 @@ public class NormalEmployee extends Staff implements Maintainable {
                 }
 
             }
+            System.out.println("Employees added successfully !");
         }catch(IOException e){
-        System.out.println("File issues");
+        System.out.println("File not found ");
     }
         return staffList;
 }
@@ -189,4 +190,7 @@ public class NormalEmployee extends Staff implements Maintainable {
         }
     }
 
+    public static void main(String[] args) {
+
+    }
 }
