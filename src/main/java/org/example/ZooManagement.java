@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * The user level 1
  * The staff level 2
  * the Admin level 3
- * Thse interactions can be observed by the interdependeance of each level which means that each class needs another to fully functionate
+ * These interactions are observable through the interdependence of each level, indicating that each class relies on another to fully function.
  * @author Joseph Josue Forestal
  */
 public class ZooManagement {
@@ -62,7 +62,6 @@ public class ZooManagement {
 
     /**
      * The menu of each user type
-     *
      * @param args (not use)
      * @throws Exception (Trows the exceptions)
      */
@@ -126,7 +125,9 @@ public class ZooManagement {
         String id = "";
         while (!isStaff[0] && attempts < MAX_ATTEMPTS) {
             System.out.print("Enter Staff ID: ");
-            String inputId = sc.nextLine().trim();
+            String currentCheck = sc.next();
+            if(!currentCheck.isBlank() && !currentCheck.isEmpty() || currentCheck.matches("\\s+")){
+                String inputId = currentCheck;
             id = inputId;
             for (Staff employee : employees) {
                 if (inputId.equals(employee.staffGetId())) {
@@ -136,6 +137,8 @@ public class ZooManagement {
                 } else {
                     attempts++;
                 }
+            }}else{
+                break;
             }
         }
 
@@ -143,7 +146,7 @@ public class ZooManagement {
                 StaffMenu(employees, id);
             isStaff[0] = false;
         } else {
-            System.out.println("Maximum login attempts reached. Exiting...");
+            System.out.println("Attempt failed Staffs must know their id: STAFF-### ---> Exiting...");
         }
     }
 
@@ -176,6 +179,10 @@ public class ZooManagement {
             }
             switch (choice) {
                 case 1:
+                    if(tasks.isEmpty()) {
+                        System.out.println("No task has been set by the Admin");
+                        break;
+                    }
                     for (Staff employee : employees) {
                         if (employee.staffGetId().equals(id)) {
                             ((NormalEmployee) employee).performMaintenanceTasks();
@@ -184,28 +191,39 @@ public class ZooManagement {
                     }
                     break;
                 case 2:
-                    System.out.println("Enter the specific task you have completed: ");
-                    boolean findTask = false;
-                    String complete = sc.next().trim();
-                    for (String task : tasks) {
-                        if (complete.equalsIgnoreCase(task)) {
+                    if(tasks.isEmpty()){
+                        System.out.println("No tasks have been set by the Admin");
+                    break;
+                    }
+                    while (true) {
+                        System.out.println("Task List:");
+                        for (int i = 0; i < tasks.size(); i++) {
+                            System.out.println((i + 1) + ". " + tasks.get(i));
+                        }
+
+                        System.out.println("Enter the number of the task you have completed (or 0 to exit): ");
+                        int taskNumber = sc.nextInt();
+
+                        if (taskNumber == 0) {
+                            break;
+                        }
+
+                        if (taskNumber > 0 && taskNumber <= tasks.size()) {
+                            String task = tasks.get(taskNumber - 1);
                             for (Staff employee : employees) {
                                 if (employee.staffGetId().equals(id)) {
                                     ((NormalEmployee) employee).Transaction("Task " + task + " allegedly completed");
                                 }
                             }
-                            tasks.remove(task);
-                            System.out.println("Task " + task + "completed.");
-                            findTask = true;
-                            break;
+                            tasks.remove(taskNumber - 1);
+                            System.out.println("Task " + task + " completed.");
+                        } else {
+                            System.out.println("Invalid task number. Please try again.");
                         }
-                    }
-                    if (!findTask) {
-                        System.out.println("Task has not been found.");
-                        break;
                     }
                     break;
                 case 3:
+                    System.out.println("----------------------------------" + "Bye " + findEmployee(employees,id,employees.size() - 1).replace("Staff is found: ", ""));
                     currentStaffIn = true;
                     break;
                 case 4:
@@ -306,29 +324,23 @@ public class ZooManagement {
                 } else System.out.println("Enclosure " + enclosureName + " already exists");
                 break;
             case 2:
-                String fileName = "/Users/josue/Animal.readFromFile";
+                String fileName = "src/main/java/org/example/AnimalFromFile.rtf";
                 System.out.println("Is file name given (Y/N)");
                 String answer = sc.next();
                 if (answer.equalsIgnoreCase("N")) {
 
-                    System.out.println("Ener file name");
+                    System.out.println("Enter file name");
                     fileName = sc.next();
-                    List<Animal> animalsFromFile = Animal.readFromFile(fileName);
-                    for (Animal animal : animalsFromFile) {
-                        addAnimalToEnclosure(animal);
-                    }
+                     Animal.readFromFile(fileName, enclosures);
                     break;
                 }else{
-                    List<Animal> animalsFromFile = Animal.readFromFile(fileName);
-                    for (Animal animal : animalsFromFile) {
-                        addAnimalToEnclosure(animal);
-                    }
+                Animal.readFromFile(fileName,enclosures);
                     break;
                 }
             case 3:
-                System.out.println("Enter species name(example Lion or Tiger)");
+                System.out.println("Enter species name(e.g Lion or Tiger)");
                 String animalName = sc.next();
-                System.out.println("Enter enclosure ID");
+                System.out.println("Enter enclosure ID (ENCLOSURE-###): ");
                 String enclosureId = sc.next();
                 Animal animal = new Animal(animalName);
                 for (Enclosure enclosure1 : enclosures) {
@@ -346,8 +358,8 @@ public class ZooManagement {
             case 4:
                 System.out.println("Is file name for employee already given(Y/N)");
                 String ans = sc.next();
-                String fileEmployee = "/Users/josue/EmployeeReadFile";
-                if(ans.equalsIgnoreCase("Y")){
+                String fileEmployee = "src/main/java/org/example/EmployeeReadFile";
+                if(ans.equalsIgnoreCase("Y") || ans.equalsIgnoreCase("Yes")){
                     employees = NormalEmployee.readStaffFromFile(fileEmployee);
                     break;
                 }else {
@@ -362,6 +374,7 @@ public class ZooManagement {
                 admin.viewUserTransactionHistory(users, name);
                 break;
             case 6:
+                System.out.println("You must write the tasks on the Zoo task file. ");
                 admin.performMaintenanceTasks();
                 break;
             case 7:
@@ -380,10 +393,7 @@ public class ZooManagement {
                 Days.setOpenedOrClosed(openedOrClosed);
                 break;
             case 12:
-                for (Enclosure enclosure1 : enclosures) {
-                    enclosure1.displayAnimals(enclosures);
-                    break;
-                }
+                Enclosure.displayAnimals(enclosures);
                 break;
             case 13:
                 sortUsersMenu();
@@ -406,7 +416,7 @@ public class ZooManagement {
                 }
                 break;
             case 17:
-                System.out.println("Enter The employee id ");
+                System.out.println("Enter The employee id: ");
                 String id = sc.next();
                 if(id.matches("STAFF-[0-9]+")){
                     System.out.println(findEmployee(employees,id, employees.size() - 1));
@@ -415,7 +425,7 @@ public class ZooManagement {
                 else {System.out.println("Invalid format for id ");
                     break;
                 }
-            case 19:
+            case 18:
                 System.out.println("Staff Id:");
                 String Id = sc.next();
                 if(Id.matches("STAFF-[0-9]+")){
@@ -429,8 +439,8 @@ public class ZooManagement {
                 }else {
                     break;
                 }
-            case 18:
-                System.out.println("Bye " + admin.getUserName());
+            case 19:
+                System.out.println("|----------------------------------------------|\nBye " + admin.getUserName());
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
@@ -534,7 +544,7 @@ public class ZooManagement {
         users.add(users1);
         while (!isExit) {
             System.out.println("Visitor Menu");
-            System.out.println("1.View zooDays");
+            System.out.println("1. View zooDays");
             System.out.println("2. View Enclosure");
             System.out.println("3. Back to Main Menu");
             System.out.println("4. Book ticket ");
@@ -663,7 +673,7 @@ public class ZooManagement {
                 System.out.println("Admin menu options:");
                 adminMenu(adminInfo, zooDays);
 
-                System.out.println( adminInfo.getUserName() + "wanna quit ? :)(Y/N) ");
+                System.out.println( adminInfo.getUserName() + " wanna quit ? :)(Y/N) ");
                 String ans = sc.next();
                 if(ans.equalsIgnoreCase("Y") || ans.equalsIgnoreCase("Yes")){
                     isNotExitAdmin  = true;
@@ -805,7 +815,6 @@ public class ZooManagement {
         if (employees == null) {
             return "The employee collection is null.";
         }
-
         if (index < 0) {
             return "Staff " + id + " has not been found.";
         }
