@@ -124,11 +124,11 @@ public class Users {
                 if(!zooDays.isOpen(reservationTime)){
                     System.out.println("Zoo is closed  for that reservation time: " + reservationTime);
                     validTime = false;
-                    break;
 
+                }else {
+                    validTime = true; // Mark the time as valid to exit the loop
+                    break; // break is powerful also
                 }
-                validTime = true; // Mark the time as valid to exit the loop
-                break; // break is powerful also
             } else {
                 System.out.println("Invalid input");
                 validTime = false;
