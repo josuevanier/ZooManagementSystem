@@ -49,4 +49,5 @@ public abstract class  Staff {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
 }
