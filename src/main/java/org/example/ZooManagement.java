@@ -340,20 +340,8 @@ public class ZooManagement {
             case 3:
                 System.out.println("Enter species name(e.g Lion or Tiger)");
                 String animalName = sc.next();
-                System.out.println("Enter enclosure ID (ENCLOSURE-###): ");
-                String enclosureId = sc.next();
                 Animal animal = new Animal(animalName);
-                for (Enclosure enclosure1 : enclosures) {
-                    if (enclosure1.getId().equalsIgnoreCase(enclosureId)) {
-                        enclosure1.addAnimal(animal);
-                        break;
-                    } else {
-                        int count = 0;
-                        System.out.println("Invalid " + count);
-                        ++count;
-                        break;
-                    }
-                }
+                addAnimalToEnclosure(animal);
                 break;
             case 4:
                 System.out.println("Is file name for employee already given(Y/N)");
