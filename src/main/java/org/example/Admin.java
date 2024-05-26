@@ -51,7 +51,7 @@ public class Admin extends Staff implements Maintainable {
         if (instance == null) {
             System.out.println("Is path for Admin already  given (Y/N) ");
             String answer = sc.next();
-            String pathName = "src/main/java/org/example/AdminOfPorject.rtf";
+            String pathName = "/Users/josue/Desktop/test_folder/ZooManagementSystem/src/main/java/org/example/AdminOfPorject.rtf";
             if(answer.equalsIgnoreCase("N")) {
                 System.out.println("Enter admin file pathName for info: ");
                 pathName = sc.next();
@@ -187,7 +187,7 @@ public class Admin extends Staff implements Maintainable {
      */
     @Override
     public void performMaintenanceTasks() {
-        String FileName = "src/main/java/org/example/ZooTaks";
+        String FileName = "/Users/josue/Desktop/test_folder/ZooManagementSystem/src/main/java/org/example/ZooTaks";
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(FileName));
             String lineTask;

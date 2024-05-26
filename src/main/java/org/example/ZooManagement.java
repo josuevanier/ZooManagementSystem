@@ -54,13 +54,13 @@ public class ZooManagement {
       System.out.println("\nFor demonstration purposes:");
       System.out.println("  - The admin username is 'Goat'.");
       System.out.println("  - The admin password is 'LOLO'.");
-      System.out.println("  - The admin password and userName can be changed from the file within the program");
+      System.out.println("  - The admin password and userName can be changed  in zoo ManagementSubmission");
       System.out.println("  - The admin must set staffs  to have access to staff Id: STAFF-###.");
       System.out.println("  - The admin must set animals from file.");
       System.out.println("  - User level must be used to sort users");
       System.out.println("  - Tasks file already have some default tasks");
-      System.out.println("Whenever file inputs are required, please enter 'yes' or 'Y' as");
-      System.out.println("the files are included within the program's resources.\n");
+      System.out.println("Whenever file inputs are required, 'yes' or 'Y'");
+      System.out.println("The files are already within the program\n");
     }
 
     /**
@@ -337,7 +337,7 @@ public class ZooManagement {
                 } else System.out.println("Enclosure " + enclosureName + " already exists");
                 break;
             case 2:
-                String fileName = "src/main/java/org/example/AnimalFromFile.rtf";
+                String fileName = "/Users/josue/Desktop/test_folder/ZooManagementSystem/src/main/java/org/example/AnimalFromFile.rtf";
                 System.out.println("Is file name given (Y/N)");
                 String answer = sc.next();
                 if (answer.equalsIgnoreCase("N")) {
@@ -359,7 +359,7 @@ public class ZooManagement {
             case 4:
                 System.out.println("Is file name for employee already given(Y/N)");
                 String ans = sc.next();
-                String fileEmployee = "src/main/java/org/example/EmployeeReadFile";
+                String fileEmployee = "/Users/josue/Desktop/test_folder/ZooManagementSystem/src/main/java/org/example/EmployeeReadFile";
                 if(ans.equalsIgnoreCase("Y") || ans.equalsIgnoreCase("Yes")){
                     employees = NormalEmployee.readStaffFromFile(fileEmployee);
                     break;
