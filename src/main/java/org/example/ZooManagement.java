@@ -97,7 +97,7 @@ public class ZooManagement {
                     break;
                 case 2:
                     if (employees == null) {
-                        System.out.println("Employees  is empty");
+                        System.out.println("Employees  have not been set by the Admin. \n");
                     } else isLoggedIn(employees);
                     break;
 
@@ -223,7 +223,8 @@ public class ZooManagement {
                     }
                     break;
                 case 3:
-                    System.out.println("----------------------------------" + "Bye " + findEmployee(employees,id,employees.size() - 1).replace("Staff is found: ", ""));
+                    System.out.println("------" + "\nBye " + findEmployee(employees,id,employees.size() - 1).
+                            replace("Staff is found: ", "") + "------" + "\n [[ Id: " + id + "]]");
                     currentStaffIn = true;
                     break;
                 case 4:
@@ -497,7 +498,10 @@ public class ZooManagement {
             }
         }
         if (!added) {
-            System.out.println("Enclosure for species " + species + " not found.");
+          Enclosure enclosure = new Enclosure(species);
+          enclosures.add(enclosure);
+          enclosure.addAnimal(animal);
+            System.out.println("Since no enclosures exist for " + species + " a new one is created: " + enclosure.getId());
         }
     }
 
@@ -527,7 +531,7 @@ public class ZooManagement {
 
         }
         boolean isExit = false;
-        System.out.println("The user transaction must be done now ! ");
+        System.out.println("|---The user transactions must be done now ! ---|");
         Users users1 = new Users(firstName, lastName, age, zooDays);
         users.add(users1);
         while (!isExit) {
@@ -731,7 +735,7 @@ public class ZooManagement {
                 break;
             case 2:
                 List<Staff> employeees = new ArrayList<>(employees);
-                selectionSortByHoursWorked(employeees);
+                selectionSortByLastName(employeees);
                 System.out.println("Staff sorted successfully.");
                 for (Staff employee : employeees) {
                     System.out.println(((NormalEmployee)employee).getFirstName() + " " + (((NormalEmployee)employee).getLastName() + " " + ((NormalEmployee) employee).getHours()));
@@ -754,7 +758,7 @@ public class ZooManagement {
      * Selection sort algorithm(O(n^2))
      * @param list take a list of staffs
      */
-    public static void selectionSortByHoursWorked(List<Staff> list) {
+    public static void selectionSortByLastName(List<Staff> list) {
         int n = list.size();
 
         for (int i = 0; i < n - 1; i++) {
