@@ -118,8 +118,15 @@ public class Users {
             String dateTimeInput = sc.next().trim();
 
 
-            if (dateTimeInput.matches("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$")) {
+            if (dateTimeInput.matches("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$") ) {
                 reservationTime = LocalDateTime.parse(dateTimeInput);
+
+                if(!zooDays.isOpen(reservationTime)){
+                    System.out.println("Zoo is closed  for that reservation time: " + reservationTime);
+                    validTime = false;
+                    break;
+
+                }
                 validTime = true; // Mark the time as valid to exit the loop
                 break; // break is powerful also
             } else {
@@ -187,7 +194,7 @@ public class Users {
     }
 
     /**
-     * Cancel a transaction in the ucrrent user's List of transactions(history)
+     * Cancel a transaction in the current user's List of transactions(history)
      * @param ticketId take a string id for the ticket booked.
      */
         public void cancelTicket (String ticketId){
@@ -205,6 +212,7 @@ public class Users {
      * This method display transaction history of the user if he booKed multiple ticket
      */
     public void displayTransactionHistory () {
+        if(transactions.isEmpty()) System.out.println("No transactions have been made.");
             System.out.println("Transaction History for User: " + gmail);
             for (Tickets ticket : transactions) {
                 System.out.println("Ticket ID: " + ticket.getId() + ", Price: $" + ticket.getPrice() + ", Status: " + ticket.getStatus());
