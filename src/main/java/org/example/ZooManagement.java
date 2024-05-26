@@ -21,9 +21,9 @@ public class ZooManagement {
     private static boolean[] isStaff = {false};
     public static LocalTime DEFAULT_OPENING_TIME = LocalTime.of(10, 0); // 10:00 AM
     public static LocalTime DEFAULT_CLOSING_TIME = LocalTime.of(22, 0); // 10:00 PM
-    static EnumSet<DayOfWeek> openedOrClosed = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+   private static EnumSet<DayOfWeek> openedOrClosed = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
 
-    static Days zooDays = new Days(openedOrClosed, DEFAULT_OPENING_TIME, DEFAULT_CLOSING_TIME);
+  private  static Days zooDays = new Days(openedOrClosed, DEFAULT_OPENING_TIME, DEFAULT_CLOSING_TIME);
 
 
     static List<String> tasks = new ArrayList<>();
@@ -49,6 +49,18 @@ public class ZooManagement {
       // static initializers
         System.out.println("Enter The name of the Zoo !");
         zooName = sc.next();
+
+      // Instructions for demonstration purposes
+      System.out.println("\nFor demonstration purposes:");
+      System.out.println("  - The admin username is 'Goat'.");
+      System.out.println("  - The admin password is 'LOLO'.");
+      System.out.println("  - The admin password and userName can be changed from the file within the program");
+      System.out.println("  - The admin must set staffs  to have access to staff Id: STAFF-###.");
+      System.out.println("  - The admin must set animals from file.");
+      System.out.println("  - User level must be used to sort users");
+      System.out.println("  - Tasks file already have some default tasks");
+      System.out.println("Whenever file inputs are required, please enter 'yes' or 'Y' as");
+      System.out.println("the files are included within the program's resources.\n");
     }
 
     /**
