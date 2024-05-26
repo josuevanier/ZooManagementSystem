@@ -86,14 +86,4 @@ public class EmailSenderClass {
             }
         });
     }
-
-
-    public static void main(String[] args)throws MessagingException {
-
-        try{
-            EmailSenderClass.sendEmail("s","Josue","Ticket");
-        }catch (MessagingException e ){
-            System.out.println(e.getMessage());
-        }
-    }
 }
