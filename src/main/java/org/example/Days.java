@@ -62,7 +62,6 @@ public class Days {//
    public boolean isOpen(LocalDateTime dateTime) {
        LocalTime[] times = specialSchedule.get(dateTime.toLocalDate());
        java.time.DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
-       System.out.println("Day of the week " +dayOfWeek);
        ArrayList<DayOfWeek> toCheck = new ArrayList<>();
        toCheck.addAll(openDays);
 
